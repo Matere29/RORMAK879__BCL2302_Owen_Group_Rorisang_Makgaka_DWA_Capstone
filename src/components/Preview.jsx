@@ -1,5 +1,5 @@
 import React from "react";
-
+//Defines a functional component named Preview and accepts a props object as an argument
 export default function Preview(props) {
     const previewElements = props.Preview.map(item => {
         const UpdatedDate = new Date(item.updated)
@@ -15,12 +15,13 @@ export default function Preview(props) {
                 <p>{item.title}</p>
                 <p>Seasons: {item.seasons}</p>
                 <p>Updated: {`${UpdatedDate.getFullYear()}-${UpdatedDate.getMonth()}-${UpdatedDate.getDate()}`}</p>
+                {/* <button>Description:{item.description}</button> */}
             </button>
         )
     })
 
     return (
-        <div>
+        <div className="previewPage">
             {
                 previewElements
             }

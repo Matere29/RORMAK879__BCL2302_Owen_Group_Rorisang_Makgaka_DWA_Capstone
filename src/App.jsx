@@ -4,22 +4,28 @@ import Preview from './components/Preview';
 import Season from './components/Season'
 import Episodes from './components/Episodes';
 import { supabase } from './components/SignIn';
+import Hero from './components/Hero';
+import logo from './components/favicon_package_v0.16/logo.png'
+import { FaBars, FaTimes} from 'react-icons/fa'
+import { useRef} from 'react'
+import './styles/main.css'
+// import GenreSort from './components/GenreSort';
 
+ 
 function App() {
-  
+ 
+  const navRef = useRef()
   const [user, setUser] = React.useState('NoneUserLoggedIn')
   const [search, setSearch] = React.useState('');
   const [phase, setPhase] = React.useState('signUpPhase')
   const [phaseState, setPhaseState] = React.useState({
+ 
     Preview: [],
     searchPreview: [],
     Season: '',
     Episode: ''
   });
-  const [favourite, setFavourite] = React.useState({
-    favouriteShowTitle: '',
-    favouriteSeasonTitle: '',
-  });
+  
 
 
   function HandleSearch(event) {
@@ -67,6 +73,7 @@ function App() {
     if (phase === 'preview') {
       const buttonId = event.currentTarget.id
       const showTitle = event.currentTarget.title
+   
       if (buttonId) {
         try {
           const response = await fetch(`https://podcast-api.netlify.app/id/${buttonId}`);
@@ -149,29 +156,62 @@ function App() {
     }
 
   }
-
+  const showNavbar = () => {
+    navRef.current.classList.toggle('responsive_nav')
+  }
+  const buttonStyle = {
+    backgroundColor: '#3498db',
+    color: '#ffffff',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    width: '25%',
+  };
   return (
     <>
+  
       {(phase !== 'signUpPhase' && phase !== 'startPhase') &&
        <>
-       <nav>
-            <button className="backButton" onClick={HandleBack}>
+       
+       <header>
+       <img src={logo} alt='logo' className='nav-logo' />
+       <h3>Podcast</h3>
+       <nav ref={navRef}>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        {/* <a href="#">Login</a> */}
+        
+       
+            <button style={buttonStyle} className="backButton" onClick={HandleBack}>
               {phase === 'preview' ? 'LOGOUT' : 'BACK'}</button>
               <h4>User : {user}</h4>
-        {phase === "preview" && <input onChange={HandleSearch} placeholder="Search..." value={search} type='text' />}
+        {phase === "preview" && <input className='input-box'onChange={HandleSearch} placeholder="Search..." value={search} type='text'/>}
+      <button className='nav-btn nav-close-btn' onClick={showNavbar}>
+        <FaTimes />
+      </button>
        </nav>
+       <button className="nav-btn" onClick={showNavbar}>
+       <FaBars />
+       </button>
+       </header>
+
       {phase === "preview" &&
           <div>
-            <button onClick={sortByAscending}>A-Z</button>
-            <button onClick={sortByDescending}>Z-A</button>
-            <button onClick={sortByLatest}>Latest</button>
-            <button onClick={sortByOldest}>Oldest</button>
+            <button style={buttonStyle}onClick={sortByAscending}>A-Z</button>
+            <button style={buttonStyle}onClick={sortByDescending}>Z-A</button>
+            <button style={buttonStyle}onClick={sortByLatest}>Latest</button>
+            <button style={buttonStyle}onClick={sortByOldest}>Oldest</button>
           </div>
           }
+          {/* <GenreSort /> */}
+       
+          <Hero />
       </>
   
       }
        <div className='DisplayStage'>
+        <div className='Display'>
       
       { phase === 'signUpPhase' ? <SignIn />   :
         phase ===  'preview' ?  <Preview   
@@ -185,6 +225,7 @@ function App() {
                                     email={user}
                                     /> : console.log('No data Found')
       }
+      </div>
      </div>
     </>
 
