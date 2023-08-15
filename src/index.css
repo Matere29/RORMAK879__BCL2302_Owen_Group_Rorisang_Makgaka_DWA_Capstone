@@ -14,6 +14,7 @@ body {
   width:auto;
   padding: 0%;
   margin: 0%;
+  background-color: #141414;
 }
 
 .DisplayStage {
@@ -21,11 +22,13 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
     gap: 20px;
     margin: 20px;
+    background: #141414
   }
   
   .previewPage{
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(176px,1fr));
+    background: #141414
   }
   
   .Display {
@@ -40,16 +43,9 @@ body {
   }
   
 
-/* .king{
-  display: flex;
-  justify-content: center;
-  align-self: center;
-} */
-
 img{
   width: 120px;
   height: 140px;
-  border: 2px solid black;
 }
 
 .showItem{
@@ -78,8 +74,6 @@ img{
 }
 
 nav{
-  /* background-color: rgb(161, 106, 238); */
-  /* height: 120px; */
   color: white;
   margin-bottom: 30px;
   align-items:flex-start;
@@ -96,8 +90,8 @@ nav{
 }
 
 .episodes{
-  width: 300px;
-  height: 100px;
+  width: 350px;
+  height: 190px;
   border: 1px solid black;
   border-radius: 7px;
   background-color: grey;
@@ -105,11 +99,17 @@ nav{
   padding: 20px;
   font-size: 10px;
   text-align: center;
+  background-color: #141414;
+}
+
+.NoFavouritesText{
+  color: black;
 }
 
 .sortSection{
   display: flex;
   justify-content: space-between;
+  background-color: #141414;
 }
 
 .LikeImage{
@@ -128,8 +128,8 @@ body {
 }
 
 .nav-logo{
-height: 60px;
-width: 100px;
+height: 150px;
+width: 150px;
 }
 .navbar-menu{
   padding: 0;
@@ -159,38 +159,10 @@ nav.dark {
   margin-right: auto;
   font-family: 'Borel', cursive;
   font-size: 35px;
-
-
-
 }
 
 .nav--title {
   color: #DEEBF8;
-}
-/*
-
-.toggler {
-  display: flex;
-  align-items: center;
-}
-
-.toggler p {
-  font-size: 0.625rem;
-  font-weight: 600;
-}
-
-.toggler--slider {
-  width: 25px;
-  height: 13px;
-  background-color: #2B283A;
-  border-radius: 2rem;
-  margin-inline: 7px;
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  border: 1px solid black;
-  box-sizing: content-box;
 }
 
 nav.dark .toggler--slider {
@@ -269,31 +241,6 @@ li link {
   background-color: white;
   border-radius: 10px;
 }
-/*
-@media (max-width:400px) {
-  .toggle-button{
-    display: flex;
-  }
-  .navbar-menu{
-    display: none;
-    width:100%
-  }
-}
-ul{
-  flex-direction: column;
-  align-items: flex-start;
-}
-ul li {
-  width: 100%;
-  flex-direction: column;
-}
-li {
-  text-align: center;
-}
-li link{
-  padding: .5rem 1rem;
-}
-*/
 
 /* Change the link color to #111 (black) on hover */
 li link:hover {
@@ -386,6 +333,7 @@ input:focus {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   margin: 20px;
+  background: #141414
 }
 
 .card {
@@ -393,7 +341,7 @@ input:focus {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #fff;
+  background: #141414;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
@@ -404,7 +352,7 @@ input:focus {
   justify-content: center;
   align-items: center;
   height: 30vh;
-  background-color: #f8f8f8;
+  background-color:#141414 ;
 }
 
 .show-info {

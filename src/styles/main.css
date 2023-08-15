@@ -13,6 +13,11 @@
 	--secondaryColor: #db2b39;
 	--textColor: #eee;
 }
+body {
+	background: #353535;
+	color: #ffffff;
+
+}
 
 header {
 	display: flex;
@@ -20,14 +25,20 @@ header {
 	justify-content: space-between;
 	height: 150px;
 	padding: 0 2rem;
-	background-color: var(--mainColor);
-	color: var(--textColor);
+	/* background-color: var(--mainColor); */
+	/* color: var(--textColor); */
+	background: #141414;
+	color: #ffffff;
 }
 
 nav a {
 	margin: 0 1rem;
-	color: var(--textColor);
+	/* color: var(--textColor); */
+	color: #ffffff;
 	text-decoration: none;
+}
+nav{
+	width: 100%;
 }
 
 nav a:hover {

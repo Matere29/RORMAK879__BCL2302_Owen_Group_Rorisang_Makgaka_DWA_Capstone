@@ -3,18 +3,21 @@ import SignIn from './components/SignIn';
 import Preview from './components/Preview';
 import Season from './components/Season'
 import Episodes from './components/Episodes';
+import Favorites from './components/Favorites';
+import History from './components/History';
 import { supabase } from './components/SignIn';
 import Hero from './components/Hero';
 import logo from './components/favicon_package_v0.16/logo.png'
 import { FaBars, FaTimes} from 'react-icons/fa'
 import { useRef} from 'react'
 import './styles/main.css'
-// import GenreSort from './components/GenreSort';
+
 
  
 function App() {
  
   const navRef = useRef()
+  const [selectedGenre, setSelectedGenre] = React.useState(null);
   const [user, setUser] = React.useState('NoneUserLoggedIn')
   const [search, setSearch] = React.useState('');
   const [phase, setPhase] = React.useState('signUpPhase')
@@ -25,7 +28,15 @@ function App() {
     Season: '',
     Episode: ''
   });
-  
+  const [favourite, setFavourite] = React.useState({
+    favouriteShowTitle: '',
+    favouriteSeasonTitle: '',
+  });
+
+   const genres = ['Personal Growth','True Crime and Investigative Journalism','History',
+ 'Comedy', 'Entertainment', 'Business', 'Fiction', 'News', 'Kids and Family'
+]
+
 
 
   function HandleSearch(event) {
@@ -82,6 +93,10 @@ function App() {
             ...prevState,
             Season: data.seasons
           }))
+          setFavourite(prev => ({
+            ...prev,
+            favouriteShowTitle: showTitle
+          }))
           setPhase('seasonPage')
         } catch (error) {
           console.error('Error fetching Preview data:', error.message);
@@ -95,12 +110,17 @@ function App() {
     if (phase === 'seasonPage') {
       const seasonButtonId = event.currentTarget.id
       const seasonTitle = event.currentTarget.title
+
       if (seasonButtonId) {
         try {
           const seasonArray = phaseState.Season[seasonButtonId].episodes
           setPhaseState(prevState => ({
             ...prevState,
             Episode: seasonArray
+          }))
+          setFavourite(prev => ({
+            ...prev,
+            favouriteSeasonTitle: seasonTitle
           }))
           setPhase('episodePage')
         } catch (error) {
@@ -111,14 +131,6 @@ function App() {
   }
   
   const FilteredElements = phaseState.Preview.filter((book) => book.title.toLowerCase().includes(search.toLowerCase()));
-  function handleGenreButtonClick(event){
-    const selectedGenre = event.target.value
-    console.log(selectedGenre)
-    setPhaseState(prevPhase => ({
-      ...prevPhase,
-      Preview: phaseState.Preview.filter((book) => book.genres.includes(1))
-    }))
-  }
   function sortByAscending() {
     setPhaseState(prevPhase => ({
       ...prevPhase,
@@ -143,6 +155,15 @@ function App() {
       Preview: phaseState.Preview.sort((a, b) => new Date(a.updated) - new Date(b.updated))
     }))
   }
+  function sortByGenre(event) {
+    const selectedGenre = parseInt(event.target.value)
+    setPhaseState(prevPhase => ({
+      ...prevPhase,
+      Preview: phaseState.searchPreview.filter((item)=> item.genres.includes(selectedGenre)) 
+    }))
+
+  }
+  
 
   function HandleBack() {
     if (phase === "seasonPage") {
@@ -154,19 +175,26 @@ function App() {
     else if (phase === 'preview') {
       setPhase('signUpPhase')
     }
-
+    else if (phase === 'FavoritesPage') {
+      setPhase('preview')
+    }
+    else if (phase === 'HistoryPage') {
+      setPhase('preview')
+    }
   }
+
   const showNavbar = () => {
     navRef.current.classList.toggle('responsive_nav')
   }
   const buttonStyle = {
-    backgroundColor: '#3498db',
+  
+    backgroundColor: '#2c2a2a',
     color: '#ffffff',
     padding: '10px 20px',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
-    width: '25%',
+    width: '18.1%',
   };
   return (
     <>
@@ -176,10 +204,10 @@ function App() {
        
        <header>
        <img src={logo} alt='logo' className='nav-logo' />
-       <h3>Podcast</h3>
+       {/* <h2>Podcast</h2> */}
        <nav ref={navRef}>
-        <a href="#">Home</a>
-        <a href="#">About</a>
+        {/* <a href="#">Home</a>
+        <a href="#">About</a> */}
         {/* <a href="#">Login</a> */}
         
        
@@ -187,6 +215,8 @@ function App() {
               {phase === 'preview' ? 'LOGOUT' : 'BACK'}</button>
               <h4>User : {user}</h4>
         {phase === "preview" && <input className='input-box'onChange={HandleSearch} placeholder="Search..." value={search} type='text'/>}
+        {phase !== "FavoritesPage" && <button onClick={()=>setPhase('FavoritesPage')}>Favourites</button>}
+        {phase !== "HistoryPage" && <button onClick={()=>setPhase('HistoryPage')}>History</button>}  
       <button className='nav-btn nav-close-btn' onClick={showNavbar}>
         <FaTimes />
       </button>
@@ -198,13 +228,19 @@ function App() {
 
       {phase === "preview" &&
           <div>
+             <select onChange={sortByGenre}>
+              <option value="All">All Genres</option>
+            {genres.map((genre, index) => (
+      <option key={index} value={index + 1}>{genre}</option>
+    ))}
+  </select>
             <button style={buttonStyle}onClick={sortByAscending}>A-Z</button>
             <button style={buttonStyle}onClick={sortByDescending}>Z-A</button>
             <button style={buttonStyle}onClick={sortByLatest}>Latest</button>
             <button style={buttonStyle}onClick={sortByOldest}>Oldest</button>
           </div>
           }
-          {/* <GenreSort /> */}
+          
        
           <Hero />
       </>
@@ -222,9 +258,20 @@ function App() {
                                     Preview={phaseState.Season}/> :
         phase === "episodePage" ?  <Episodes
                                     Preview={phaseState.Episode}
+                                    favouriteShowTitle={favourite.favouriteShowTitle}
+                                    favouriteSeasonTitle={favourite.favouriteSeasonTitle}
                                     email={user}
-                                    /> : console.log('No data Found')
-      }
+                                    /> : 
+        phase === "FavoritesPage" ? <Favorites
+                                    email={user}
+                                    /> :
+        phase === "HistoryPage" ? <History
+                                    email={user}
+                                    /> :console.log('No data Found')
+
+      }                 
+                                    
+
       </div>
      </div>
     </>
