@@ -38,9 +38,9 @@ export default function Preview(props) {
                 title={item.title}
             >
                 <img src={item.image} />
-                <h3>{item.title}</h3>
+                <h5>{item.title}</h5>
                 <p>Seasons: {item.seasons}</p>
-                <h5>Genre: {item.genres.map(genderToString).join(',')}</h5>
+                <h6>Genre: {item.genres.map(genderToString).join(',')}</h6>
                 <p>Updated: {`${UpdatedDate.getFullYear()}-${UpdatedDate.getMonth()}-${UpdatedDate.getDate()}`}</p>
                 {/* <button>Description:{item.description}</button> */}
             </button>

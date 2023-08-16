@@ -37,6 +37,7 @@ export default function Hero() {
         <div className="show-info">
           <h1>{shows[showIndex].name}</h1>
           <img src={shows[showIndex].image} alt={shows[showIndex].name} />
+          <h5>{shows[showIndex].title}</h5>
         </div>
       )}
     </div>

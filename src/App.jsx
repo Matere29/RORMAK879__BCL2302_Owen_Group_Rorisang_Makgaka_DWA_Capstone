@@ -11,6 +11,9 @@ import logo from './components/favicon_package_v0.16/logo.png'
 import { FaBars, FaTimes} from 'react-icons/fa'
 import { useRef} from 'react'
 import './styles/main.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 
  
@@ -214,7 +217,7 @@ function App() {
             <button style={buttonStyle} className="backButton" onClick={HandleBack}>
               {phase === 'preview' ? 'LOGOUT' : 'BACK'}</button>
               <h5>User : {user}</h5>
-        {phase === "preview" && <input className='input-box'onChange={HandleSearch} placeholder="Search..." value={search} type='text' />}
+        {phase === "preview" && <input className='input-box'onChange={HandleSearch} placeholder="Search..." value={search} type='text' /> }
         {phase !== "FavoritesPage" && <button style={buttonStyle} onClick={()=>setPhase('FavoritesPage')}>Favourites</button>}
         {phase !== "HistoryPage" && <button style={buttonStyle} onClick={()=>setPhase('HistoryPage')}>History</button>}  
       <button className='nav-btn nav-close-btn' onClick={showNavbar}>
@@ -227,7 +230,7 @@ function App() {
        </header>
 
       {phase === "preview" &&
-          <div>
+          <div className='genreSort'>
              <select onChange={sortByGenre}>
               <option value="All">All Genres</option>
             {genres.map((genre, index) => (
