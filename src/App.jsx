@@ -213,10 +213,10 @@ function App() {
        
             <button style={buttonStyle} className="backButton" onClick={HandleBack}>
               {phase === 'preview' ? 'LOGOUT' : 'BACK'}</button>
-              <h4>User : {user}</h4>
-        {phase === "preview" && <input className='input-box'onChange={HandleSearch} placeholder="Search..." value={search} type='text'/>}
-        {phase !== "FavoritesPage" && <button onClick={()=>setPhase('FavoritesPage')}>Favourites</button>}
-        {phase !== "HistoryPage" && <button onClick={()=>setPhase('HistoryPage')}>History</button>}  
+              <h5>User : {user}</h5>
+        {phase === "preview" && <input className='input-box'onChange={HandleSearch} placeholder="Search..." value={search} type='text' />}
+        {phase !== "FavoritesPage" && <button style={buttonStyle} onClick={()=>setPhase('FavoritesPage')}>Favourites</button>}
+        {phase !== "HistoryPage" && <button style={buttonStyle} onClick={()=>setPhase('HistoryPage')}>History</button>}  
       <button className='nav-btn nav-close-btn' onClick={showNavbar}>
         <FaTimes />
       </button>
